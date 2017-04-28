@@ -26,6 +26,6 @@ public class LibertyServletTest extends EndpointTest {
 
     @Test
     public void testDeployment() throws ClientProtocolException, IOException {
-    	testEndpoint("/servlet", "");
+    	testEndpoint("/servlet", "getAuthType: BASIC");
     }
 }

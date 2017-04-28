@@ -23,6 +23,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+
+import org.apache.cxf.helpers.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -37,33 +39,23 @@ public class EndpointTest {
         String war = System.getProperty("war.context");
     	String apploc = System.getProperty("appLocation");
     	System.out.println("Port: " + port + "\nWar: " + war + "\nApploc: " + apploc);
-        //String url = "http://user1:password@localhost:" + port + "/" + war + endpoint;
-    	String url = "http://localhost:" + port + "/" + war + endpoint;
-        System.out.println("Testing 1" + url);
-        Response response = sendRequest(url, "GET");
-        int responseCode = response.getStatus();
-        System.out.println("Test 1 response is " + response.getHeaders().toString() + "And response code is " + responseCode);
-        assertTrue("Incorrect response code: " + responseCode + "But the response is + " + response.readEntity(String.class),
+        String url = "http://localhost:" + port + "/" + war + endpoint;
+        System.out.println("Testing " + url);
+        HttpResponse response = sendRequest(url, "GET");
+        int responseCode = response.getStatusLine().getStatusCode();
+        assertTrue("Incorrect response code: " + responseCode,
                    responseCode == 200);
-        String responseString = response.readEntity(String.class);
-        response.close();
-        assertTrue("Incorrect response, response is " + responseString, responseString.contains(expectedOutput));
+        String responseString = IOUtils.toString(response.getEntity().getContent());
+        assertTrue("Incorrect response, response is: " + responseString + "Expected: " + expectedOutput, responseString.contains(expectedOutput));
     }
 
-    public Response sendRequest(String url, String requestType) throws ClientProtocolException, IOException {
-    	String encoding = Base64.getEncoder().encodeToString(("test1:test1").getBytes());
-    	HttpPost httppost = new HttpPost("http://user1:password@localhost:9080/servlet/servlet");
+    public HttpResponse sendRequest(String url, String requestType) throws ClientProtocolException, IOException {
+    	String encoding = Base64.getEncoder().encodeToString(("user1:password").getBytes());
+    	HttpPost httppost = new HttpPost(url);
     	httppost.setHeader("Authorization", "Basic " + encoding);
-    	System.out.println("executing request " + httppost.getRequestLine());
+    	System.out.println("Executing request " + httppost.getRequestLine());
     	HttpClient httpclient = HttpClientBuilder.create().build();
-    	HttpResponse response1 = httpclient.execute(httppost);
-    	HttpEntity entity = response1.getEntity();
-        Client client = ClientBuilder.newClient();
-        System.out.println("Testing 2" + url);
-        WebTarget target = client.target(url);
-        Invocation.Builder invoBuild = target.request();
-        Response response = invoBuild.build(requestType).invoke();
-        System.out.println("Test 2 response is " + response.getStringHeaders().toString());
+    	HttpResponse response = httpclient.execute(httppost);
         return response;
     }
 }

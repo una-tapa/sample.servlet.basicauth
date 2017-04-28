@@ -26,5 +26,4 @@ public class TestApplication extends EndpointTest {
     public void testDeployment() throws ClientProtocolException, IOException {
         testEndpoint("/index.html", "<h1>Welcome to your Liberty Application</h1>");
     }
-
 }
