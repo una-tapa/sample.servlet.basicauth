@@ -1,7 +1,7 @@
-Servlet Sample
+Basic Authentication Sample
 ==============
 
-This project contains a simple Servlet application.
+The simple servlet sample with added security - it prompts you for credentials before displaying the test web page.
 
 ## Running in Eclipse
 
