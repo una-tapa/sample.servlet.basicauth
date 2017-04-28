@@ -31,8 +31,8 @@
 
     <applicationMonitor updateTrigger="mbean"/>
 
-    <webApplication id="servlet" location="sample.servlet.war"
-    	name="servlet">
+    <webApplication id="basicauth" location="basicauth.war"
+    	name="basicauth">
     	<application-bnd>
     		<security-role name="Manager" id="Manager">
     			<user name="user1"/>
