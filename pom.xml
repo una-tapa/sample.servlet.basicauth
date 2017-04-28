@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>liberty.maven</groupId>
-	<artifactId>sample.servlet</artifactId>
+	<artifactId>basicauth</artifactId>
 	<version>1</version>
 	<packaging>war</packaging>
 	
@@ -32,7 +32,7 @@
 		<!-- Liberty server properties -->
 		<testServerHttpPort>9080</testServerHttpPort>
 		<testServerHttpsPort>9443</testServerHttpsPort>
-		<warContext>servlet</warContext>
+		<warContext>basicauth</warContext>
 		<package.file>${project.build.directory}/${project.artifactId}.zip</package.file>
 		<packaging.type>usr</packaging.type>
 </properties>
