@@ -31,23 +31,64 @@ import org.apache.http.impl.client.HttpClientBuilder;
 public class EndpointTest {
 	
 	public void testEndpoint(String endpoint, String expectedOutput) throws ClientProtocolException, IOException {
-		String port = System.getProperty("liberty.test.port");
-		String war = System.getProperty("war.context");
-		System.out.println("Port: " + port + "\nWar: " + war);
+	    String port = System.getProperty("liberty.test.port");
+	    String war = System.getProperty("war.context");
+	    System.out.println("Port: " + port + "\nWar: " + war);
         String url = "http://localhost:" + port + "/" + war + endpoint;
         System.out.println("Testing " + url);
-        HttpResponse response;
         if (expectedOutput.equalsIgnoreCase("getAuthType: BASIC")){
-        	HttpResponse expectFail;
-        	expectFail = sendRequest(url,"GET");
-        	response = sendSecureRequest(url, "GET");
-        	int responseCodeFail = expectFail.getStatusLine().getStatusCode();
-            assertTrue("Incorrect response code (expected 401 unauthorized): " + responseCodeFail,
-                    responseCodeFail == 401);
+            testCredentials(url, expectedOutput);
+            testNoCredentials(url);
+            testWithWrongPassword(url);
+            testWrongUserId(url);
         }
         else {
-        	response = sendRequest(url, "GET");
+            testUnsecure(url, expectedOutput);
         }
+	}
+	
+	//test without credentials
+	public void testUnsecure(String url, String expectedOutput) throws ClientProtocolException, IOException {
+	    System.out.println("Test without credentials started");
+	    HttpResponse response = sendRequest(url, "GET", null);
+	    testWithResponse(response, expectedOutput);
+        System.out.println("Test without credentials finished");
+	}
+	
+	//test secure endpoint with credentials
+	public void testCredentials(String url, String expectedOutput) throws ClientProtocolException, IOException {
+	    System.out.println("Test secure endpoint with credentials started");
+	    HttpResponse response = sendRequest(url, "GET", "user1:password");
+	    testWithResponse(response, expectedOutput);
+        System.out.println("Test secure endpoint with credentials finished");
+	}
+	
+	//test secure endpoint with no credentials
+	public void testNoCredentials(String url) throws ClientProtocolException, IOException {
+	    System.out.println("Test secure endpoint with no credentials started");
+	    HttpResponse response = sendRequest(url, "GET", null);
+	    testWithoutResponse(401, response);
+        System.out.println("Test secure endpoint with no credentials finished");
+	}
+	
+	//test secure endpoint with incorrect credentials
+	public void testWithWrongPassword(String url) throws ClientProtocolException, IOException {
+	    System.out.println("Test secure endpoint with incorrect credentials started");
+	    HttpResponse response = sendRequest(url, "GET", "notAUser:notAPassword");
+	    testWithoutResponse(401, response);
+        System.out.println("Test secure endpoint with incorrect credentials finished");
+	}
+	
+	//test secure endpoint with valid but unprivileged credentials
+	public void testWrongUserId(String url) throws ClientProtocolException, IOException {
+	    System.out.println("Test secure endpoint with valid but unprivileged credentials started");
+	    HttpResponse response = sendRequest(url, "GET", "user2:password");
+	    testWithoutResponse(403, response);
+        System.out.println("Test secure endpoint with valid but unprivileged credentials finished");
+	}
+    
+	public void testWithResponse(HttpResponse response, String expectedOutput) throws UnsupportedOperationException, IOException
+	{
         int responseCode = response.getStatusLine().getStatusCode();
         assertTrue("Incorrect response code: " + responseCode,
                    responseCode == 200);
@@ -55,22 +96,33 @@ public class EndpointTest {
         assertTrue("Incorrect response, response is: " + responseString + "Expected: " + expectedOutput, responseString.contains(expectedOutput));
 	}
 	
-    public HttpResponse sendRequest(String url, String requestType) throws ClientProtocolException, IOException {
-    	HttpPost httppost = new HttpPost(url);
-    	System.out.println("Executing request " + httppost.getRequestLine());
-    	HttpClient httpclient = HttpClientBuilder.create().build();
-    	HttpResponse response = httpclient.execute(httppost);
-        return response;
-    }
-    
-    public HttpResponse sendSecureRequest(String url, String requestType) throws ClientProtocolException, IOException {
-    	String encoding = Base64.getEncoder().encodeToString(("user1:password").getBytes());
-    	HttpPost httppost = new HttpPost(url);
-    	httppost.setHeader("Authorization", "Basic " + encoding);
-    	System.out.println("Executing secure request " + httppost.getRequestLine());
-    	HttpClient httpclient = HttpClientBuilder.create().build();
-    	HttpResponse response = httpclient.execute(httppost);
-        return response;
+	public void testWithoutResponse(int expectedResponseCode, HttpResponse response)
+	{
+	    int responseCode = response.getStatusLine().getStatusCode();
+        assertTrue("Incorrect response code (expected " + expectedResponseCode + "): " + responseCode,
+                   responseCode == expectedResponseCode);
+	}
+	
+    //send HTTP request with credentials
+    public HttpResponse sendRequest(String url, String requestType, String credentials) throws ClientProtocolException, IOException {
+        if (credentials!=null){
+            String encoding = Base64.getEncoder().encodeToString((credentials).getBytes());
+            HttpPost httppost = new HttpPost(url);
+            httppost.setHeader("Authorization", "Basic " + encoding);
+            System.out.println("Executing secure request " + httppost.getRequestLine());
+            HttpClient httpclient = HttpClientBuilder.create().build();
+            HttpResponse response = httpclient.execute(httppost);
+            return response;
+        }
+        else
+        {
+            HttpPost httppost = new HttpPost(url);
+            System.out.println("Executing request " + httppost.getRequestLine());
+            HttpClient httpclient = HttpClientBuilder.create().build();
+            HttpResponse response = httpclient.execute(httppost);
+            return response;
+        }
+
     }
 	
 }
