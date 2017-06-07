@@ -28,7 +28,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-public class EndpointTest {
+public class EndpointHelper {
 	
 	public void testEndpoint(String endpoint, String expectedOutput) throws ClientProtocolException, IOException {
 	    String port = System.getProperty("liberty.test.port");

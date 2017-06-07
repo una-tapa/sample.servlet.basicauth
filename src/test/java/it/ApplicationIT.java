@@ -14,19 +14,17 @@
   * limitations under the License.
   *******************************************************************************/ 
 
-package it.servlet;
-
-import it.EndpointTest;
+package it;
 
 import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 import org.junit.Test;
 
-public class LibertyServletTest extends EndpointTest {
+public class ApplicationIT extends EndpointHelper {
 
     @Test
     public void testDeployment() throws ClientProtocolException, IOException {
-    	testEndpoint("/servlet", "getAuthType: BASIC");
+        testEndpoint("/index.html", "<h1>Welcome to your Liberty Application</h1>");
     }
 }
