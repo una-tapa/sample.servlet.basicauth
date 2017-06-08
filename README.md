@@ -1,4 +1,4 @@
-Basic Authentication Sample
+Basic Authentication Sample [![Build Status](https://travis-ci.org/WASdev/sample.servlet.basicauth.svg?branch=master)](https://travis-ci.org/WASdev/sample.servlet.basicauth)
 ==============
 
 The simple servlet sample with added security - it prompts you for credentials before displaying the test web page.
