@@ -10,12 +10,12 @@ The simple servlet sample with added security - it prompts you for credentials b
 3. Clone this repository.
 4. Import the sample into Eclipse using *File -> Import -> Maven -> Existing Maven Projects* option.
 5. Right click on the project and go to *Properties > Project Facets* and select *Dynamic Web Module* (if not already selected).
-6. Deploy the sample into Liberty server. Right click on the *servlet* sample and select *Run As -> Run on Server* option. Find and select the Liberty profile server and press *Finish*. 
+6. Deploy the sample into Liberty server. Right click on the *servlet* sample and select *Run As -> Run on Server* option. Find and select the Liberty profile server and press *Finish*.
 7. Go to: [http://localhost:9080/basicauth](http://localhost:9080/basicauth)
 
 ## Running with Maven
 
-This project can be built with Apache Maven. The project uses Liberty Maven Plug-in to automatically download and install Liberty with Java EE7 Web Profile runtime from Maven Central. Liberty Maven Plug-in is also used to create, configure, and run the application on the Liberty server. 
+This project can be built with Apache Maven. The project uses Liberty Maven Plug-in to automatically download and install Liberty with Java EE7 Web Profile runtime from Maven Central. Liberty Maven Plug-in is also used to create, configure, and run the application on the Liberty server.
 
 Use the following steps to run the application with Maven:
 
@@ -30,6 +30,36 @@ Use the following steps to run the application with Maven:
     ```
 
 Once the server is running, the application will be available under [http://localhost:9080/basicauth](http://localhost:9080/basicauth).
+
+## Running with Gradle
+
+This project can also be built and run with Gradle. The provided `build.gradle` file applies the Liberty Gradle Plug-in and is configured to automatically download and install Liberty with Java EE Web Profile 7 runtime from Maven Central. The Liberty Gradle Plug-in has built-in tasks that can be used to create, configure, and run the application on the Liberty server.
+
+Use the following steps to run the application with Gradle:
+
+1. Execute the full Gradle build. The Liberty Gradle Plug-in will download and install the Liberty server.
+    ```bash
+    $ gradle clean build
+    ```
+
+2. To start the server with the Servlet sample execute:
+    ```bash
+    $ gradle libertyStart
+    ```
+
+    Alternatively, execute the run command:
+    ```bash
+    $ gradle libertyRun --no-daemon
+    ```
+
+Once the server has started, the application will be available under [http://localhost:9080/basicauth](http://localhost:9080/basicauth).
+
+3. To stop the server, execute:
+    ```bash
+    $ gradle libertyStop
+    ```  
+
+Please refer to the [ci.gradle](http://github.com/WASDev/ci.gradle) repository for documentation about using the Liberty Gradle Plug-in.
 
 # Notice
 
@@ -52,4 +82,3 @@ limitations under the License.
 ````
 
 [Liberty Maven Plug-in]: https://github.com/WASdev/ci.maven
-
