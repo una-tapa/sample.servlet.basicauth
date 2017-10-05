@@ -38,7 +38,7 @@ ext {
     testServerHttpsPort = 9443
 
     // This is set in the ibm-web-ext.xml file
-    warContext = 'jpaApp'
+    warContext = 'basicauth'
 
 }
 
