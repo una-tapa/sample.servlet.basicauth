@@ -15,7 +15,7 @@ The simple servlet sample with added security - it prompts you for credentials b
 
 ## Running with Maven
 
-This project can be built with Apache Maven. The project uses [Liberty Maven Plug-in][] to automatically download and install the Liberty Java EE7 Web Profile runtime from Maven Central. Liberty Maven Plug-in is also used to create, configure, and run the application on the Liberty server.
+This project can be built with Apache Maven. The project uses [Liberty Maven Plug-in][] to automatically download and install the Liberty Java EE Web Profile  runtime from Maven Central. Liberty Maven Plug-in is also used to create, configure, and run the application on the Liberty server.
 
 Use the following steps to run the application with Maven:
 
@@ -33,7 +33,7 @@ Once the server is running, the application will be available under [http://loca
 
 ## Running with Gradle
 
-This project can also be built and run with Gradle. The provided `build.gradle` file applies the [Liberty Gradle Plug-in][] and is configured to automatically download and install Liberty with Java EE Web Profile 7 runtime from Maven Central. The Liberty Gradle Plug-in has built-in tasks that can be used to create, configure, and run the application on the Liberty server.
+This project can also be built and run with [Gradle][]. The provided `build.gradle` file applies the [Liberty Gradle Plug-in][] and is configured to automatically download and install the Liberty Java EE Web Profile 7 runtime from Maven Central. The Liberty Gradle Plug-in has built-in tasks that can be used to create, configure, and run the application on the Liberty server.
 
 Use the following steps to run the application with Gradle:
 
@@ -85,3 +85,4 @@ limitations under the License.
 [Liberty Gradle Plug-in]: https://github.com/WASdev/ci.gradle
 [ci.gradle]: https://github.com/WASdev/ci.gradle
 [http://localhost:9080/basicauth]:http://localhost:9080/basicauth
+[Gradle]: https://gradle.org
