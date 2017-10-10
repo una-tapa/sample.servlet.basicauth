@@ -11,7 +11,7 @@ The simple servlet sample with added security - it prompts you for credentials b
 4. Import the sample into Eclipse using *File -> Import -> Maven -> Existing Maven Projects* option.
 5. Right click on the project and go to *Properties > Project Facets* and select *Dynamic Web Module* (if not already selected).
 6. Deploy the sample into Liberty server. Right click on the *servlet* sample and select *Run As -> Run on Server* option. Find and select the Liberty profile server and press *Finish*.
-7. Go to: [http://localhost:9080/basicauth](http://localhost:9080/basicauth)
+7. Go to: [http://localhost:9080/basicauth][]
 
 ## Running with Maven
 
@@ -29,7 +29,7 @@ Use the following steps to run the application with Maven:
     $ mvn liberty:run-server
     ```
 
-Once the server is running, the application will be available under [http://localhost:9080/basicauth](http://localhost:9080/basicauth).
+Once the server is running, the application will be available under [http://localhost:9080/basicauth][].
 
 ## Running with Gradle
 
@@ -52,14 +52,14 @@ Use the following steps to run the application with Gradle:
     $ gradle libertyRun --no-daemon
     ```
 
-Once the server has started, the application will be available under [http://localhost:9080/basicauth](http://localhost:9080/basicauth).
+Once the server has started, the application will be available under [http://localhost:9080/basicauth][].
 
 3. To stop the server, execute:
     ```bash
     $ gradle libertyStop
     ```  
 
-Please refer to the [ci.gradle](http://github.com/WASDev/ci.gradle) repository for documentation about using the Liberty Gradle Plug-in.
+Please refer to the [ci.gradle][] repository for documentation about using the Liberty Gradle Plug-in.
 
 # Notice
 
@@ -83,3 +83,5 @@ limitations under the License.
 
 [Liberty Maven Plug-in]: https://github.com/WASdev/ci.maven
 [Liberty Gradle Plug-in]: https://github.com/WASdev/ci.gradle
+[ci.gradle]: https://github.com/WASdev/ci.gradle
+[http://localhost:9080/basicauth]:http://localhost:9080/basicauth
