@@ -4,7 +4,7 @@ apply plugin: 'liberty'
 group = 'liberty.gradle'
 version = '1'
 
-description = """"""
+description = "Basic Authentication Sample"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -43,13 +43,13 @@ ext {
 }
 
 war {
-		archiveName = baseName + '.' + extension
+	archiveName = baseName + '.' + extension
 }
 
 liberty {
     server{
         configFile = file("src/main/liberty/config/server.xml")
-				bootstrapProperties = ['default.http.port': "${testServerHttpPort}" , 'default.https.port': "${testServerHttpsPort}", 'appContext': "${warContext}",'appLocation': "${war.baseName}"]
+		bootstrapProperties = ['default.http.port': "${testServerHttpPort}" , 'default.https.port': "${testServerHttpsPort}", 'appContext': "${warContext}",'appLocation': "${war.baseName}"]
         name = 'LibertyProjectServer'
         apps = [war]
      }
@@ -62,7 +62,7 @@ dependencies {
     testCompile group: 'org.apache.cxf', name: 'cxf-rt-rs-client', version:'3.1.11'
     testCompile group: 'org.glassfish', name: 'javax.json', version:'1.0.4'
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
-		libertyRuntime group: 'com.ibm.websphere.appserver.runtime', name: 'wlp-webProfile7', version: '17.0.0.2'
+	libertyRuntime group: 'com.ibm.websphere.appserver.runtime', name: 'wlp-webProfile7', version: '17.0.0.2'
 }
 
 test {
