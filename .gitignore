@@ -5,3 +5,5 @@ target/
 .settings/
 bin/
 /.apt_generated/
+.gradle/
+build/
