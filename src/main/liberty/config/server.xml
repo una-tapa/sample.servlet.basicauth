@@ -19,6 +19,8 @@
         <feature>localConnector-1.0</feature>
     </featureManager>
     
+    <keyStore id="defaultKeyStore" password="Liberty" />
+
     <!--  -->
     <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
     
